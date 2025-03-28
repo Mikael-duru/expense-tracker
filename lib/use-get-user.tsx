@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import type { User } from "firebase/auth";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, onSnapshot } from "firebase/firestore";
-import { useRouter } from "next/navigation";
 
 import { auth, db } from "@/firebase/firebase";
 
@@ -12,7 +11,6 @@ export function useGetUserInfo() {
 	const [user, setUser] = useState<User | null>(null);
 	const [userDetails, setUserDetails] = useState<UserProps | null>(null);
 	const [loading, setLoading] = useState(true);
-	const router = useRouter();
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -34,7 +32,6 @@ export function useGetUserInfo() {
 			} else {
 				setUser(null);
 				setUserDetails(null);
-				router.push("/");
 			}
 
 			setLoading(false);

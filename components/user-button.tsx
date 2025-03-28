@@ -1,7 +1,9 @@
+"use client";
+
 import React from "react";
-import { LogOut, Settings, UserRoundCheck } from "lucide-react";
+import { LogOut, Settings, UserRound, UserRoundCheck } from "lucide-react";
 import { useRouter } from "next/navigation";
-import type { User } from "firebase/auth";
+import { signOut } from "firebase/auth";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -12,28 +14,33 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useGetUserInfo } from "@/lib/use-get-user";
+import { auth } from "@/firebase/firebase";
+import Link from "next/link";
 
-type AvatarDropdownProps = {
-	handleLogout: () => void;
-	user: User;
-	photoURL: string;
-	firstName: string;
-};
-
-const AvatarDropdown = ({
-	handleLogout,
-	user,
-	photoURL,
-	firstName,
-}: AvatarDropdownProps) => {
+const UserButton = () => {
+	const { user, userDetails } = useGetUserInfo();
 	const router = useRouter();
 
-	return (
+	const handleLogout = async () => {
+		try {
+			await signOut(auth);
+			router.push("/");
+		} catch (error) {
+			console.error("Logout error:", error);
+		}
+	};
+
+	return !user ? (
+		<Link href={"/sign-in"} className="hover:bg-muted p-2 rounded-full">
+			<UserRound size={20} />
+		</Link>
+	) : (
 		<DropdownMenu>
 			<DropdownMenuTrigger>
 				<Avatar>
 					<AvatarImage
-						src={photoURL || (user?.photoURL as string)}
+						src={userDetails?.photoURL || (user?.photoURL as string)}
 						alt="user profile pic"
 					/>
 					<AvatarFallback>
@@ -46,7 +53,7 @@ const AvatarDropdown = ({
 					<div className="flex items-center justify-center gap-4">
 						<Avatar className="w-12 h-12 shrink-0">
 							<AvatarImage
-								src={photoURL || (user?.photoURL as string)}
+								src={userDetails?.photoURL || (user?.photoURL as string)}
 								alt="user profile pic"
 							/>
 							<AvatarFallback>
@@ -54,8 +61,10 @@ const AvatarDropdown = ({
 							</AvatarFallback>
 						</Avatar>
 						<div>
-							<h1 className="capitalize pb-1">Hi! {firstName} 👋</h1>
-							<p className="text-xs lowercase">{user?.email}</p>
+							<h1 className="capitalize pb-1">
+								Hi! {userDetails?.firstName} 👋
+							</h1>
+							<p className="text-xs lowercase">{userDetails?.email}</p>
 						</div>
 					</div>
 				</DropdownMenuLabel>
@@ -87,4 +96,4 @@ const AvatarDropdown = ({
 	);
 };
 
-export default AvatarDropdown;
+export default UserButton;
