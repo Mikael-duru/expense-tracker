@@ -32,7 +32,10 @@ const UserButton = () => {
 	};
 
 	return !user ? (
-		<Link href={"/sign-in"} className="hover:bg-muted p-2 rounded-full">
+		<Link
+			href={"/sign-in"}
+			className="hover:bg-muted p-2 rounded-full border border-muted"
+		>
 			<UserRound size={20} />
 		</Link>
 	) : (
