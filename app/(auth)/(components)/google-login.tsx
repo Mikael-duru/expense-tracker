@@ -24,7 +24,11 @@ const SignInWithGoogle = () => {
 			const result = await signInWithPopup(auth, provider);
 			const user = result.user;
 
-			Cookies.set("auth", user.uid);
+			Cookies.set("__session_auth", user.uid, {
+				expires: 1, // 1 day
+				secure: true,
+				sameSite: "Strict",
+			});
 
 			const userData = {
 				firstName: user.displayName ? user.displayName.split(" ")[0] : "",
@@ -50,7 +54,7 @@ const SignInWithGoogle = () => {
 				})
 			);
 
-			router.push("/");
+			router.push("/select-currency");
 		} catch (error: any) {
 			console.log(error.message);
 			toast.error("Failed to log in. Please try again.");

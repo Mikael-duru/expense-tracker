@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import {
 	createUserWithEmailAndPassword,
@@ -28,6 +28,18 @@ import CustomInput from "@/components/custom-input";
 const AuthForm = ({ type }: { type: string }) => {
 	const router = useRouter();
 	const [isLoading, setIsLoading] = useState(false);
+
+	useEffect(() => {
+		const checkAuthCookie = async () => {
+			const authCookie = Cookies.get("__session_auth");
+
+			if (!authCookie) {
+				await signOut(auth);
+			}
+		};
+
+		checkAuthCookie();
+	}, []);
 
 	const authFormSchema = formSchema(type);
 
@@ -66,7 +78,7 @@ const AuthForm = ({ type }: { type: string }) => {
 		await setDoc(doc(db, "users", user.uid), userData);
 		localStorage.setItem("registrationData", JSON.stringify({ userData }));
 		await signOut(auth);
-		router.push("/wizard");
+		router.push("/sign-in");
 	};
 
 	const handleAuthenticate = async ({ email, password }: any) => {
@@ -77,7 +89,11 @@ const AuthForm = ({ type }: { type: string }) => {
 		);
 		const user = userCredential.user;
 
-		Cookies.set("auth", user.uid);
+		Cookies.set("__session_auth", user.uid, {
+			expires: 1, // 1 day
+			secure: true,
+			sameSite: "Strict",
+		});
 
 		const userDoc = await getDoc(doc(db, "users", user.uid));
 
@@ -90,7 +106,7 @@ const AuthForm = ({ type }: { type: string }) => {
 		}
 
 		localStorage.removeItem("registrationData");
-		router.push("/");
+		router.push("/select-currency");
 	};
 
 	const handlePasswordReset = async ({ email }: any) => {

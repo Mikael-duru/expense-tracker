@@ -4,6 +4,7 @@ import React from "react";
 import { LogOut, Settings, UserRound, UserRoundCheck } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
+import Cookies from "js-cookie";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -14,7 +15,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useGetUserInfo } from "@/lib/use-get-user";
+import { useGetUserInfo } from "@/hooks/use-get-user";
 import { auth } from "@/firebase/firebase";
 import Link from "next/link";
 
@@ -25,6 +26,7 @@ const UserButton = () => {
 	const handleLogout = async () => {
 		try {
 			await signOut(auth);
+			Cookies.remove("__session_auth");
 			router.push("/");
 		} catch (error) {
 			console.error("Logout error:", error);

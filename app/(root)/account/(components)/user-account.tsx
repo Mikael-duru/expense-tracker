@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import UserProfile from "./user-profile";
-import { useGetUserInfo } from "@/lib/use-get-user";
+import { useGetUserInfo } from "@/hooks/use-get-user";
 import ChangePassword from "./change-password";
 import { User } from "firebase/auth";
 

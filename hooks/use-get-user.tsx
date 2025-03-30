@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import type { User } from "firebase/auth";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, onSnapshot } from "firebase/firestore";
+import Cookies from "js-cookie";
 
 import { auth, db } from "@/firebase/firebase";
 
@@ -16,6 +17,11 @@ export function useGetUserInfo() {
 		const unsubscribe = onAuthStateChanged(auth, async (user) => {
 			if (user) {
 				setUser(user);
+				Cookies.set("__session_auth", user.uid, {
+					expires: 1, // 1 day
+					secure: true,
+					sameSite: "Strict",
+				});
 
 				try {
 					const userDocRef = doc(db, "users", user.uid);
