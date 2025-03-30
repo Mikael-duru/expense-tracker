@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 
 export async function middleware(req: NextRequest) {
 	const { pathname } = req.nextUrl;
-	const authCookie = req.cookies.get("auth");
+	const authCookie = req.cookies.get("__session_auth")?.value;
 
 	// Public routes that don't require authentication
 	const publicRoutes = ["/sign-in", "/sign-up"];
@@ -13,8 +13,8 @@ export async function middleware(req: NextRequest) {
 		return NextResponse.next();
 	}
 
-	// If user is not authenticated and is not on the homepage, redirect to the sign-in page
-	if (!authCookie && pathname !== "/") {
+	// If user is not authenticated, redirect to the sign-in page
+	if (!authCookie) {
 		return NextResponse.redirect(new URL("/sign-in", req.url));
 	}
 
