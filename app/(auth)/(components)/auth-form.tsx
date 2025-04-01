@@ -22,10 +22,14 @@ import { Form } from "@/components/ui/form";
 import { Card, CardContent } from "@/components/ui/card";
 import SignInWithGoogle from "./google-login";
 import { auth, db } from "@/firebase/firebase";
-import { formSchema } from "@/lib/schemas";
+import { formSchema } from "@/schema/auth-form";
 import CustomInput from "@/components/custom-input";
 
-const AuthForm = ({ type }: { type: string }) => {
+interface AuthFormProps {
+	type: AuthFormType;
+}
+
+const AuthForm = ({ type }: AuthFormProps) => {
 	const router = useRouter();
 	const [isLoading, setIsLoading] = useState(false);
 

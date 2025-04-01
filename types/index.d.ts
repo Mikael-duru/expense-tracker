@@ -1,3 +1,4 @@
+declare type AuthFormType = "sign-in" | "sign-up" | "forgot-password";
 declare type UserProps = {
 	_id: string;
 	firstName: string;
@@ -7,3 +8,11 @@ declare type UserProps = {
 	photoURL: string;
 	imgPublicId: string;
 };
+
+declare type Currency = {
+	label: string;
+	value: string;
+	locale: string;
+};
+
+declare type TransactionType = "income" | "expense";

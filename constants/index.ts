@@ -15,5 +15,3 @@ export const Currencies = [
 	{ label: "₩ Won", value: "KRW", locale: "ko-KR" },
 	{ label: "₹ Rupee", value: "INR", locale: "hi-IN" },
 ];
-
-export type Currency = (typeof Currencies)[0];

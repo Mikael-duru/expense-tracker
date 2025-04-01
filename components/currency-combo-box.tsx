@@ -18,11 +18,11 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import { Currency } from "@/types";
 import { Currencies } from "@/constants";
+import { updateUserCurrency } from "@/app/select-currency/_actions/user-actions";
+
 import { useMutation } from "@tanstack/react-query";
 import { User } from "@prisma/client";
-import { updateUserCurrency } from "@/app/select-currency/_actions/user-actions";
 import { toast } from "sonner";
 
 export function CurrencyComboBox() {

@@ -1,7 +1,9 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { updateUserCurrencySchema } from "@/lib/schemas";
+import { updateUserCurrencySchema } from "@/schema/user-currency";
+import { revalidatePath } from "next/cache";
+
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -36,6 +38,8 @@ export const createUser = async () => {
 		});
 	}
 
+	// revalidate the homepage that uses this data
+	revalidatePath("/");
 	return user;
 };
 

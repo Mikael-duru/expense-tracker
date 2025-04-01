@@ -25,7 +25,7 @@ import { Button } from "@/components/ui/button";
 import { auth } from "@/firebase/firebase";
 import CustomInput from "@/components/custom-input";
 import { toast } from "sonner";
-import { formSchema } from "@/lib/schemas";
+import { formSchema } from "@/schema/auth-form";
 
 const ChangePassword = () => {
 	const [isLoading, setIsLoading] = useState(false);
