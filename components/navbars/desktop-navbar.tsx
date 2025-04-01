@@ -8,8 +8,8 @@ import { ThemeSwitcherBtn } from "../theme-toggle-btn";
 
 const DesktopNavbar = () => {
 	return (
-		<div className="hidden md:block border-separate border-b bg-background shadow-sm dark:shadow-lg">
-			<nav className="container mx-auto flex items-center justify-between px-8">
+		<div className="hidden md:block border-separate border-b bg-background shadow-sm dark:shadow-lg px-8">
+			<nav className="container mx-auto flex items-center justify-between">
 				<div className="flex h-[80px] min-h-[60px] items-center gap-x-4">
 					<Logo mobileText={true} />
 

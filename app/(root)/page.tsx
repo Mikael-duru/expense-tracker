@@ -11,7 +11,7 @@ const Home = async () => {
 		return redirect("/select-currency");
 	}
 
-	return <Dashboard />;
+	return <Dashboard user={user} />;
 };
 
 export default Home;

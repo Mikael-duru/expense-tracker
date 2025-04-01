@@ -1,18 +1,20 @@
 "use client";
 
 import React from "react";
+import { User } from "@prisma/client";
 
 import { useGetUserInfo } from "@/hooks/use-get-user";
 import { Button } from "../../../components/ui/button";
 import CreateTransactionDialog from "./create-transaction-dialog";
+import Overview from "./overview";
 
-const Dashboard = () => {
+const Dashboard = ({ user }: { user: User }) => {
 	const { userDetails } = useGetUserInfo();
 
 	return (
 		<div className="h-full bg-background">
-			<div className="border-b bg-card">
-				<div className="container mx-auto flex flex-wrap items-center justify-between gap-6 py-8 px-4 md:px-8">
+			<div className="border-b bg-card px-4 md:px-8">
+				<div className="container mx-auto flex flex-wrap items-center justify-between gap-6 py-8">
 					<h1 className="text-3xl font-bold">
 						Hello, {userDetails?.firstName}! 👋
 					</h1>
@@ -44,6 +46,8 @@ const Dashboard = () => {
 					</div>
 				</div>
 			</div>
+
+			<Overview user={user} />
 		</div>
 	);
 };

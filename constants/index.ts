@@ -15,3 +15,5 @@ export const Currencies = [
 	{ label: "₩ Won", value: "KRW", locale: "ko-KR" },
 	{ label: "₹ Rupee", value: "INR", locale: "hi-IN" },
 ];
+
+export const MAX_DATE_RANGE_DAYS = 90;
