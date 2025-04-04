@@ -7,17 +7,21 @@ import { useGetUserInfo } from "@/hooks/use-get-user";
 import { Button } from "../../../components/ui/button";
 import CreateTransactionDialog from "./create-transaction-dialog";
 import Overview from "./overview";
+import History from "./history";
 
 const Dashboard = ({ user }: { user: User }) => {
 	const { userDetails } = useGetUserInfo();
 
 	return (
 		<div className="h-full bg-background">
+			{/* welcome and create transaction */}
 			<div className="border-b bg-card px-4 md:px-8">
 				<div className="container mx-auto flex flex-wrap items-center justify-between gap-6 py-8">
-					<h1 className="text-3xl font-bold">
-						Hello, {userDetails?.firstName}! 👋
-					</h1>
+					{userDetails?.firstName && (
+						<h1 className="text-3xl font-bold">
+							Hello, {userDetails?.firstName}! 👋
+						</h1>
+					)}
 
 					<div className="flex items-center gap-3">
 						<CreateTransactionDialog
@@ -47,7 +51,11 @@ const Dashboard = ({ user }: { user: User }) => {
 				</div>
 			</div>
 
+			{/* overview section */}
 			<Overview user={user} />
+
+			{/* history chart section */}
+			<History user={user} />
 		</div>
 	);
 };

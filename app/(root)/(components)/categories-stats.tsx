@@ -79,7 +79,7 @@ const CategoriesCard = ({
 
 			<div className="flex items-center justify-between gap-2">
 				{filteredData.length <= 0 ? (
-					<div className="flex h-60 w-full items-center justify-center flex-col">
+					<div className="flex h-60 w-full items-center justify-center flex-col px-4">
 						<h4>No data for the selected period</h4>
 						<p className="text-sm text-muted-foreground text-center">
 							Try selecting a different period or adding new{" "}

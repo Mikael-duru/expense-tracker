@@ -58,11 +58,14 @@ const AuthForm = ({ type }: AuthFormProps) => {
 	});
 
 	const handleRegister = async ({
+		e,
 		email,
 		password,
 		firstName,
 		lastName,
 	}: any) => {
+		e.preventDefault();
+
 		const { user } = await createUserWithEmailAndPassword(
 			auth,
 			email,
@@ -85,7 +88,9 @@ const AuthForm = ({ type }: AuthFormProps) => {
 		router.push("/sign-in");
 	};
 
-	const handleAuthenticate = async ({ email, password }: any) => {
+	const handleAuthenticate = async ({ e, email, password }: any) => {
+		e.preventDefault();
+
 		const userCredential = await signInWithEmailAndPassword(
 			auth,
 			email,
@@ -113,7 +118,9 @@ const AuthForm = ({ type }: AuthFormProps) => {
 		router.push("/select-currency");
 	};
 
-	const handlePasswordReset = async ({ email }: any) => {
+	const handlePasswordReset = async ({ e, email }: any) => {
+		e.preventDefault();
+
 		await sendPasswordResetEmail(auth, email);
 		toast.success(
 			`Request Successful! \n If an account exists for ${email}, you'll receive instructions.`

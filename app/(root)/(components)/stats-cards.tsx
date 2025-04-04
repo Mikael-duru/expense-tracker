@@ -8,6 +8,7 @@ import { DateToUTCDate, GetFormatterForCurrency } from "@/lib/helpers";
 import { User } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowDown, ArrowUp, Wallet } from "lucide-react";
+import numeral from "numeral";
 import React, { ReactNode, useCallback, useMemo } from "react";
 import CountUp from "react-countup";
 
@@ -36,7 +37,7 @@ const StatsCards = ({ from, to, user }: StatsCardsProps) => {
 
 	return (
 		<SkeletonWrapper isLoading={statsQuery.isLoading} fullWidth>
-			<div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+			<div className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
 				<StatsCard
 					formatter={formatter}
 					value={income}
@@ -79,8 +80,25 @@ const StatsCard = ({
 	formatter: Intl.NumberFormat;
 	Icon: ReactNode;
 }) => {
+	// const formatFn = useCallback(
+	// 	(value: number) => formatter.format(value),
+	// 	[formatter]
+	// );
+
 	const formatFn = useCallback(
-		(value: number) => formatter.format(value),
+		(value: number) => {
+			if (value === 0) return formatter.format(0); // Handle zero properly
+
+			// Get currency symbol
+			const parts = formatter.formatToParts(value);
+			const currencySymbol =
+				parts.find((part) => part.type === "currency")?.value || "";
+
+			// Apply numeral formatting & convert to uppercase
+			const formattedValue = numeral(value).format("0.00a").toUpperCase();
+
+			return `${currencySymbol}${formattedValue}`;
+		},
 		[formatter]
 	);
 

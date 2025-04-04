@@ -39,7 +39,7 @@ const NavItem = ({
 					if (clickCallback) clickCallback();
 				}}
 			>
-				{showIcon && Icon && <Icon className="mr-2 w-full h-full" />}
+				{showIcon && Icon && <Icon className="mr-2 !size-[18px]" />}
 				<span className="capitalize">{label}</span>
 			</Link>
 			{isActive && (

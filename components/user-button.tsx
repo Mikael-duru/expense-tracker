@@ -27,7 +27,7 @@ const UserButton = () => {
 		try {
 			await signOut(auth);
 			Cookies.remove("__session_auth");
-			router.push("/");
+			router.push("/sign-in");
 		} catch (error) {
 			console.error("Logout error:", error);
 		}

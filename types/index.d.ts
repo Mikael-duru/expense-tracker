@@ -16,3 +16,7 @@ declare type Currency = {
 };
 
 declare type TransactionType = "income" | "expense";
+
+declare type Timeframe = "month" | "year";
+
+declare type Period = { month: number; year: number };
