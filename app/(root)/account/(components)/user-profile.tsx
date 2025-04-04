@@ -124,12 +124,20 @@ const UserProfile = ({ user, userDetails }: UserProfileProps) => {
 
 	return (
 		<Card>
-			<CardContent className="space-y-8 pt-6">
+			<CardHeader>
+				<CardTitle className="text-3xl">My Account</CardTitle>
+				<CardDescription className="text-muted-foreground">
+					Manage your account here. You can update your profile picture and
+					delete your account if needed.
+				</CardDescription>
+			</CardHeader>
+			<CardContent className="space-y-6">
 				<Card>
 					<CardContent className="space-y-4 max-sm:px-4">
-						<div className="pt-6 sm:flex justify-between max-sm:text-center">
+						<div className="pt-6 flex flex-wrap justify-between max-sm:text-center">
 							<div>
-								<Avatar className="h-24 w-24 border-2 border-primary/20 max-sm:mx-auto">
+								{/* Profile Image */}
+								<Avatar className="h-24 w-24 border-2 border-primary/20 ml-4">
 									<AvatarImage
 										src={userDetails?.photoURL}
 										alt="user profile pic"
@@ -138,8 +146,9 @@ const UserProfile = ({ user, userDetails }: UserProfileProps) => {
 										<UserRoundCheck size={50} />
 									</AvatarFallback>
 								</Avatar>
-								<div className="pt-2">
-									<h1 className="font-medium text-xl -mb-1">
+								{/* Profile Name and Email */}
+								<div className="pt-2 text-start">
+									<h1 className="font-medium text-xl -mb-0.5">
 										{userDetails?.displayName}
 									</h1>
 									<p className="text-sm sm:text-base text-muted-foreground">

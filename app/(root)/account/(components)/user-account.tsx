@@ -28,36 +28,34 @@ const UserAccount = () => {
 	};
 
 	return (
-		<div className="container mx-auto flex flex-col items-center justify-center p-4 gap-6 max-w-2xl">
-			<div className="self-start ">
-				<h1 className="text-5xl md:text-6xl font-bold mb-1">My Account</h1>
-				<p className="text-muted-foreground">Manage your account info.</p>
+		<div className="px-4 md:px-8">
+			<div className="container mx-auto flex flex-col items-center justify-center py-8 gap-6 max-w-3xl">
+				<Tabs
+					value={activeTab}
+					onValueChange={handleTabChange}
+					className="w-full"
+				>
+					<TabsList className="grid w-full grid-cols-2">
+						<TabsTrigger value="account" className="flex justify-center gap-2">
+							Account
+						</TabsTrigger>
+						<TabsTrigger value="password" className="flex justify-center gap-2">
+							Password
+						</TabsTrigger>
+					</TabsList>
+					{/* profile update */}
+					<TabsContent value="account">
+						<UserProfile
+							user={user as User}
+							userDetails={userDetails as UserProps}
+						/>
+					</TabsContent>
+					{/* change password */}
+					<TabsContent value="password">
+						<ChangePassword />
+					</TabsContent>
+				</Tabs>
 			</div>
-			<Tabs
-				value={activeTab}
-				onValueChange={handleTabChange}
-				className="w-full"
-			>
-				<TabsList className="grid w-full grid-cols-2">
-					<TabsTrigger value="account" className="flex justify-center gap-2">
-						Account
-					</TabsTrigger>
-					<TabsTrigger value="password" className="flex justify-center gap-2">
-						Password
-					</TabsTrigger>
-				</TabsList>
-				{/* profile update */}
-				<TabsContent value="account">
-					<UserProfile
-						user={user as User}
-						userDetails={userDetails as UserProps}
-					/>
-				</TabsContent>
-				{/* change password */}
-				<TabsContent value="password">
-					<ChangePassword />
-				</TabsContent>
-			</Tabs>
 		</div>
 	);
 };
