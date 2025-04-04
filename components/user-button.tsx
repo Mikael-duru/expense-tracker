@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { LogOut, Settings, UserRound, UserRoundCheck } from "lucide-react";
+import { LogOut, UserCog, UserRound, UserRoundCheck } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import Cookies from "js-cookie";
@@ -80,9 +80,9 @@ const UserButton = () => {
 				>
 					<div className="flex items-center justify-center gap-4">
 						<div className="flex items-center justify-center w-12 h-12 shrink-0">
-							<Settings />
+							<UserCog />
 						</div>
-						<p>Manage account</p>
+						<p>My account</p>
 					</div>
 				</DropdownMenuItem>
 				<DropdownMenuItem
