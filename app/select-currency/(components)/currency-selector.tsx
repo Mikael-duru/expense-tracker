@@ -22,13 +22,16 @@ const SelectCurrency = () => {
 	return (
 		<div className="container mx-auto flex flex-col items-center justify-between gap-4 max-w-2xl px-[5%]">
 			<hgroup className="text-center">
-				<h1 className="text-[28px] leading-[1] sm:text-3xl">
-					Welcome,{" "}
-					<span className="font-bold dark:text-amber-400 capitalize">
-						{userDetails?.firstName}!
-					</span>{" "}
-					👋
-				</h1>
+				{userDetails?.firstName && (
+					<h1 className="text-[28px] leading-[1] sm:text-3xl">
+						Welcome,{" "}
+						<span className="font-bold dark:text-amber-400 capitalize">
+							{userDetails?.firstName}!
+						</span>{" "}
+						👋
+					</h1>
+				)}
+
 				<h2 className="mt-4 text-base text-muted-foreground">
 					Let&apos;s get started by setting up your currency.
 				</h2>
