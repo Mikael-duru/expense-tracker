@@ -224,7 +224,7 @@ const CreateTransactionDialog = ({
 														if (!value) return;
 														field.onChange(value);
 													}}
-													initialFocus
+													// initialFocus
 												/>
 											</PopoverContent>
 										</Popover>

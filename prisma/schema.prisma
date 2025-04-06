@@ -9,9 +9,14 @@ generator client {
 }
 
 // Use sqlite for best local (dev) experience but host with postgresql (production)
+// datasource db {
+//   provider = "sqlite"
+//   url      = "file:./dev.db"
+// }
+
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
