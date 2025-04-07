@@ -1,6 +1,5 @@
 "use client";
 
-import { GetBalanceStatsResponseType } from "@/app/api/stats/balance/route";
 import SkeletonWrapper from "@/components/skeleton-wrapper";
 import { Card } from "@/components/ui/card";
 import { DateToUTCDate, GetFormatterForCurrency } from "@/lib/helpers";
@@ -80,24 +79,27 @@ const StatsCard = ({
 	formatter: Intl.NumberFormat;
 	Icon: ReactNode;
 }) => {
-	// const formatFn = useCallback(
-	// 	(value: number) => formatter.format(value),
-	// 	[formatter]
-	// );
-
 	const formatFn = useCallback(
 		(value: number) => {
 			if (value === 0) return formatter.format(0); // Handle zero properly
 
-			// Get currency symbol
-			const parts = formatter.formatToParts(value);
-			const currencySymbol =
-				parts.find((part) => part.type === "currency")?.value || "";
+			// Decide whether to abbreviate or not
+			const shouldAbbreviate = Math.abs(value) >= 100000;
 
-			// Apply numeral formatting & convert to uppercase
-			const formattedValue = numeral(value).format("0.00a").toUpperCase();
+			if (shouldAbbreviate) {
+				// Get currency symbol
+				const parts = formatter.formatToParts(value);
+				const currencySymbol =
+					parts.find((part) => part.type === "currency")?.value || "";
 
-			return `${currencySymbol}${formattedValue}`;
+				// Abbreviate the value
+				const formattedValue = numeral(value).format("0.00a").toUpperCase();
+
+				return `${currencySymbol}${formattedValue}`;
+			}
+
+			// Return full number format without adding currency symbol again
+			return formatter.format(value);
 		},
 		[formatter]
 	);

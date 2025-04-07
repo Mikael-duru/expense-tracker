@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/card";
 import { GetFormatterForCurrency } from "@/lib/helpers";
 import HistoryPeriodSelector from "./history-period-selector";
-import { GetHistoryDataResponseType } from "@/app/api/history-data/route";
 import SkeletonWrapper from "@/components/skeleton-wrapper";
 import { cn } from "@/lib/utils";
 

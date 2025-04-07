@@ -1,7 +1,7 @@
 "use client";
 
 import { DateToUTCDate } from "@/lib/helpers";
-import { GetTransactionHistoryResponseType } from "@/app/api/transactions-history/route";
+// import { GetTransactionHistoryResponseType } from "@/app/api/transactions-history/route";
 import {
 	Table,
 	TableBody,

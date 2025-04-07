@@ -22,10 +22,27 @@ export const createCategory = async (form: CreateCategorySchemaType) => {
 	}
 
 	const { name, icon, type } = parsedBody.data;
+
+	// Normalize category name to lowercase
+	const categoryName = name.toLowerCase();
+
+	// Check if category already exists
+	const existingCategory = await prisma.category.findFirst({
+		where: {
+			userId,
+			name: categoryName,
+		},
+	});
+
+	if (existingCategory) {
+		throw new Error("Category name already exists.");
+	}
+
+	// Create the new category
 	return await prisma.category.create({
 		data: {
 			userId,
-			name,
+			name: categoryName,
 			icon,
 			type,
 		},

@@ -19,27 +19,13 @@ export const GET = async (request: Request) => {
 		});
 	}
 
-	const stats = await getBalanceStats(
-		userId,
-		queryParams.data.from,
-		queryParams.data.to
-	);
-
-	return Response.json(stats);
-};
-
-export type GetBalanceStatsResponseType = Awaited<
-	ReturnType<typeof getBalanceStats>
->;
-
-export const getBalanceStats = async (userId: string, from: Date, to: Date) => {
 	const totals = await prisma.transaction.groupBy({
 		by: ["type"],
 		where: {
 			userId,
 			date: {
-				gte: from,
-				lte: to,
+				gte: queryParams.data.from,
+				lte: queryParams.data.to,
 			},
 		},
 		_sum: {
@@ -47,8 +33,41 @@ export const getBalanceStats = async (userId: string, from: Date, to: Date) => {
 		},
 	});
 
-	return {
+	return Response.json({
 		expense: totals.find((t) => t.type === "expense")?._sum.amount || 0,
 		income: totals.find((t) => t.type === "income")?._sum.amount || 0,
-	};
+	});
+
+	// const stats = await getBalanceStats(
+	// 	userId,
+	// 	queryParams.data.from,
+	// 	queryParams.data.to
+	// );
+
+	// return Response.json(stats);
 };
+
+// export type GetBalanceStatsResponseType = Awaited<
+// 	ReturnType<typeof getBalanceStats>
+// >;
+
+// export const getBalanceStats = async (userId: string, from: Date, to: Date) => {
+// 	const totals = await prisma.transaction.groupBy({
+// 		by: ["type"],
+// 		where: {
+// 			userId,
+// 			date: {
+// 				gte: from,
+// 				lte: to,
+// 			},
+// 		},
+// 		_sum: {
+// 			amount: true,
+// 		},
+// 	});
+
+// 	return {
+// 		expense: totals.find((t) => t.type === "expense")?._sum.amount || 0,
+// 		income: totals.find((t) => t.type === "income")?._sum.amount || 0,
+// 	};
+// };

@@ -1,6 +1,5 @@
 "use client";
 
-import { GetCategoriesStatsResponseType } from "@/app/api/stats/categories/route";
 import SkeletonWrapper from "@/components/skeleton-wrapper";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";

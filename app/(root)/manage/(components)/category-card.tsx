@@ -11,7 +11,7 @@ const CategoryCard = ({ category }: { category: Category }) => {
 				<span className="text-3xl" role="img">
 					{category.icon}
 				</span>
-				<span>{category.name}</span>
+				<span className="lowercase">{category.name}</span>
 			</div>
 			<DeleteCategoryDialog
 				category={category}

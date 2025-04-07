@@ -17,27 +17,19 @@ export const GET = async (request: Request) => {
 		throw new Error(queryParams.error.message);
 	}
 
-	const stats = await getCategoriesStats(
-		userId,
-		queryParams.data.from,
-		queryParams.data.to
-	);
+	// const stats = await getCategoriesStats(
+	// 	userId,
+	// 	queryParams.data.from,
+	// 	queryParams.data.to
+	// );
 
-	return Response.json(stats);
-};
-
-export type GetCategoriesStatsResponseType = Awaited<
-	ReturnType<typeof getCategoriesStats>
->;
-
-const getCategoriesStats = async (userId: string, from: Date, to: Date) => {
 	const stats = await prisma.transaction.groupBy({
 		by: ["type", "category", "categoryIcon"],
 		where: {
 			userId,
 			date: {
-				gte: from,
-				lte: to,
+				gte: queryParams.data.from,
+				lte: queryParams.data.to,
 			},
 		},
 		_sum: {
@@ -50,5 +42,32 @@ const getCategoriesStats = async (userId: string, from: Date, to: Date) => {
 		},
 	});
 
-	return stats;
+	return Response.json(stats);
 };
+
+// export type GetCategoriesStatsResponseType = Awaited<
+// 	ReturnType<typeof getCategoriesStats>
+// >;
+
+// const getCategoriesStats = async (userId: string, from: Date, to: Date) => {
+// 	const stats = await prisma.transaction.groupBy({
+// 		by: ["type", "category", "categoryIcon"],
+// 		where: {
+// 			userId,
+// 			date: {
+// 				gte: from,
+// 				lte: to,
+// 			},
+// 		},
+// 		_sum: {
+// 			amount: true,
+// 		},
+// 		orderBy: {
+// 			_sum: {
+// 				amount: "desc",
+// 			},
+// 		},
+// 	});
+
+// 	return stats;
+// };

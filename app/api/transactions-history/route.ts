@@ -23,20 +23,6 @@ export const GET = async (request: Request) => {
 		});
 	}
 
-	const transactions = await getTransactionHistory(
-		userId,
-		queryParams.data.from,
-		queryParams.data.to
-	);
-
-	return Response.json(transactions);
-};
-
-export type GetTransactionHistoryResponseType = Awaited<
-	ReturnType<typeof getTransactionHistory>
->;
-
-const getTransactionHistory = async (userId: string, from: Date, to: Date) => {
 	const user = await prisma.user.findUnique({
 		where: { userId },
 	});
@@ -49,8 +35,8 @@ const getTransactionHistory = async (userId: string, from: Date, to: Date) => {
 		where: {
 			userId,
 			date: {
-				gte: from,
-				lte: to,
+				gte: queryParams.data.from,
+				lte: queryParams.data.to,
 			},
 		},
 		orderBy: {
@@ -58,8 +44,10 @@ const getTransactionHistory = async (userId: string, from: Date, to: Date) => {
 		},
 	});
 
-	return transactions.map((transaction) => ({
+	const userTransactions = transactions.map((transaction) => ({
 		...transaction,
 		formattedAmount: formatter.format(transaction.amount),
 	}));
+
+	return Response.json(userTransactions);
 };

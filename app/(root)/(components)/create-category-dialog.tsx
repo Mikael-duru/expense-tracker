@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { CreateCategorySchema } from "@/schema/categories";
+import { createCategory } from "../_actions/categories";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CircleOff, Loader2, PlusSquare } from "lucide-react";
@@ -36,7 +37,6 @@ import { z } from "zod";
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createCategory } from "../_actions/categories";
 import { Category } from "@prisma/client";
 import { toast } from "sonner";
 import { useTheme } from "next-themes";
@@ -93,8 +93,12 @@ const CreateCategoryDialog = ({
 
 			setOpen((prev) => !prev);
 		},
-		onError: () => {
-			toast.error("Something went wrong", {
+		onError: (error: unknown) => {
+			// Extract error message
+			const errorMessage =
+				error instanceof Error ? error.message : "Something went wrong";
+
+			toast.error(errorMessage, {
 				id: "create-category",
 			});
 		},

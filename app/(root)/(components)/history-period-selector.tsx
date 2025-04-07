@@ -1,4 +1,3 @@
-import { getHistoryPeriodsResponseType } from "@/app/api/history-periods/route";
 import SkeletonWrapper from "@/components/skeleton-wrapper";
 import {
 	Select,

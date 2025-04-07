@@ -76,7 +76,9 @@ const ProfileImageUpload = ({ user, userDetails }: ProfileImageUploadProps) => {
 						className="relative flex items-center cursor-pointer"
 					>
 						{isLoading ? (
-							<Loader2 size={20} className="animate-spin" />
+							<>
+								<Loader2 size={20} className="animate-spin mr-2" /> Uploading...
+							</>
 						) : (
 							<>
 								<Upload className="h-4 w-4 mr-2" />

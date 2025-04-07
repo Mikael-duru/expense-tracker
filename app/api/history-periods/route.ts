@@ -1,3 +1,4 @@
+// import { getHistoryPeriods } from "@/app/(root)/_actions/history";
 import { getUserId } from "@/app/select-currency/_actions/user-actions";
 import { prisma } from "@/lib/prisma";
 
@@ -9,16 +10,8 @@ export const GET = async (request: Request) => {
 		redirect("/sign-in");
 	}
 
-	const periods = await getHistoryPeriods(userId);
-	return new Response(JSON.stringify(periods));
-};
-
-export type getHistoryPeriodsResponseType = Awaited<
-	ReturnType<typeof getHistoryPeriods>
->;
-
-const getHistoryPeriods = async (userId: string) => {
-	const result = await prisma.monthHistory.findMany({
+	// get all the years that have transactions for calender (year period selector)
+	const periods = await prisma.monthHistory.findMany({
 		where: {
 			userId,
 		},
@@ -33,11 +26,11 @@ const getHistoryPeriods = async (userId: string) => {
 		],
 	});
 
-	const years = result.map((el) => el.year);
+	const years = periods.map((p) => p.year);
 	if (years.length === 0) {
 		// return the current year
-		return [new Date().getFullYear()];
+		return new Response(JSON.stringify([new Date().getFullYear()]));
 	}
 
-	return years;
+	return new Response(JSON.stringify(years));
 };

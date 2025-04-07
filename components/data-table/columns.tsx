@@ -2,7 +2,6 @@ import { ColumnDef } from "@tanstack/react-table";
 import { useState } from "react";
 
 import { DataTableColumnHeader } from "./column-header";
-import { GetTransactionHistoryResponseType } from "@/app/api/transactions-history/route";
 import { cn } from "@/lib/utils";
 import {
 	DropdownMenu,
