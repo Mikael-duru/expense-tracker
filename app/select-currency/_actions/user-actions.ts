@@ -10,10 +10,7 @@ import { redirect } from "next/navigation";
 export const getUserId = async () => {
 	const cookiesStore = await cookies();
 	const userId = cookiesStore.get("__session_auth")?.value;
-	if (!userId) {
-		throw new Error("User ID not found");
-	}
-	return userId;
+	return userId || null;
 };
 
 export const createUser = async () => {
