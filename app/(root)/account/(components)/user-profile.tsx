@@ -11,7 +11,7 @@ import {
 import { deleteDoc, doc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { Loader2, UserRoundCheck, Eye, EyeOff } from "lucide-react";
+import { UserRoundCheck, Eye, EyeOff } from "lucide-react";
 import Cookies from "js-cookie";
 import { toast } from "sonner";
 
@@ -72,7 +72,6 @@ const UserProfile = ({ user, userDetails }: UserProfileProps) => {
 			// Ensure password is entered for email users
 			if (isEmailUser && !password) {
 				setPasswordError("Password is required");
-				setIsLoading(false);
 				return;
 			}
 
@@ -91,7 +90,6 @@ const UserProfile = ({ user, userDetails }: UserProfileProps) => {
 					} else {
 						toast.error("Reauthentication failed. Please try again.");
 					}
-					setIsLoading(false);
 					return;
 				}
 			}
@@ -103,7 +101,6 @@ const UserProfile = ({ user, userDetails }: UserProfileProps) => {
 				} catch (error) {
 					console.log("[Delete_Google_Account]", error);
 					toast.error("Reauthentication failed. Please try again.");
-					setIsLoading(false);
 					return;
 				}
 			}
@@ -115,11 +112,16 @@ const UserProfile = ({ user, userDetails }: UserProfileProps) => {
 			await deleteUser(currentUser);
 			Cookies.remove("__session_auth");
 
-			toast.success("Account deleted successfully!");
+			toast.success("Account deleted successfully! 🎉", {
+				id: "delete-user-account",
+			});
 			router.push("/");
 		} catch (error) {
 			console.error("[Delete_Account]", error);
-			toast.error("Something went wrong. Please try again.");
+			toast.error("Something went wrong. Please try again.", {
+				id: "delete-user-account",
+			});
+		} finally {
 			setIsLoading(false);
 		}
 	};
@@ -222,15 +224,16 @@ const UserProfile = ({ user, userDetails }: UserProfileProps) => {
 					<CardFooter>
 						<div className="w-full flex justify-end">
 							<Button
-								onClick={handleDeleteUserAccount}
+								onClick={() => {
+									toast.loading("Deleting your account...", {
+										id: "delete-user-account",
+									});
+									handleDeleteUserAccount();
+								}}
 								variant="destructive"
 								disabled={deleteAccount !== "delete my account" || isLoading}
 							>
-								{isLoading ? (
-									<Loader2 size={20} className="animate-spin" />
-								) : (
-									"Confirm"
-								)}
+								Confirm
 							</Button>
 						</div>
 					</CardFooter>
