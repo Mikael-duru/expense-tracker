@@ -7,7 +7,7 @@ const Home = async () => {
 	// Check if user has already selected a currency. if no, redirect to select currency
 	const user = await createUser();
 
-	if (!user.currency) {
+	if (!user || !user.currency) {
 		return redirect("/select-currency");
 	}
 
