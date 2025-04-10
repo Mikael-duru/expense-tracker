@@ -59,8 +59,6 @@ export const deleteUserFromDB = async () => {
 		prisma.yearHistory.deleteMany({ where: { userId } }),
 		prisma.user.delete({ where: { userId } }),
 	]);
-
-	await prisma.$disconnect();
 };
 
 export const updateUserCurrency = async (currency: string) => {
