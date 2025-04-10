@@ -19,9 +19,12 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { Currencies } from "@/constants";
-import { updateUserCurrency } from "@/app/select-currency/_actions/user-actions";
+import {
+	createUser,
+	updateUserCurrency,
+} from "@/app/select-currency/_actions/user-actions";
 
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { User } from "@prisma/client";
 import { toast } from "sonner";
 
@@ -31,6 +34,20 @@ export function CurrencyComboBox() {
 	const [selectedOption, setSelectedOption] = React.useState<Currency | null>(
 		null
 	);
+
+	const user = useQuery<User>({
+		queryKey: ["user"],
+		queryFn: async () => await createUser(),
+	});
+
+	React.useEffect(() => {
+		if (!user.data) return;
+
+		const userCurrency = Currencies.find(
+			(currency) => currency.value === user.data.currency
+		);
+		if (userCurrency) setSelectedOption(userCurrency);
+	}, [user.data]);
 
 	const mutation = useMutation({
 		mutationFn: updateUserCurrency,
