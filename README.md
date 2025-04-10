@@ -1,9 +1,9 @@
-# BudgetWise | Budget Tracker  
+# BudgetWise | Expenses Tracker  
 
-BudgetWise is a modern budget-tracking app designed to help users efficiently manage their finances. Built with cutting-edge technologies, it offers a seamless and user-friendly experience for tracking expenses, setting budgets, and gaining insights into financial habits.  
+BudgetWise is a modern income and expense tracking app designed to help users efficiently manage their finances. Built with cutting-edge technologies, it offers a seamless and user-friendly experience for tracking expenses, setting budgets, and gaining insights into financial habits.  
 
 ## 🚀 Features  
-- 💰 Expense Tracking – Log and categorize your expenses effortlessly.
+- 💰 Income and Expense Tracking – Log and categorize your income and expenses effortlessly.
 - 📊 Budget Management – Set monthly budgets and track your spending.
 - 🔄 Real-time Updates – Data is updated dynamically using TanStack Query.
 - 📸 Media Uploads – Upload profile image via Cloudinary.
@@ -30,8 +30,8 @@ BudgetWise is a modern budget-tracking app designed to help users efficiently ma
 ## 📦 Installation  
 1. Clone the repository:  
    ```bash
-   git clone https://github.com/Mikael-duru/budget-tracker.git
-   cd budget-tracker
+   git clone https://github.com/Mikael-duru/expense-tracker.git
+   cd expense-tracker
    ```
 2. Install dependencies:  
    ```bash
