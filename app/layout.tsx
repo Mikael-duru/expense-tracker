@@ -9,9 +9,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-	title: "BudgetWise | Budget Tracker",
+	title: "BudgetWise | Expense Tracker",
 	description:
-		"Take control of your spending with Expense Tracker Pro. Monitor your financial habits, set budgets, and visualize your expenses. MikaelCodes - 2025",
+		"Take control of your spending with Expense Tracker Pro. Monitor your financial habits and visualize your expenses. MikaelCodes - 2025",
 };
 
 export default function RootLayout({
