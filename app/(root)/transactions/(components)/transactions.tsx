@@ -41,7 +41,7 @@ const TransactionsComponent = () => {
 					/>
 				</div>
 			</div>
-			<div className="px-4 md:px-8">
+			<div className="px-4 md:px-8 pb-16">
 				<div className="container mx-auto">
 					<TransactionsTable from={dateRange.from} to={dateRange.to} />
 				</div>

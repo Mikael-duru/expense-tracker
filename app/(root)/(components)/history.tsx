@@ -51,7 +51,7 @@ const History = ({ user }: { user: User }) => {
 		historyDataQuery.data && historyDataQuery.data.length > 0;
 
 	return (
-		<section className="px-4 md:px-8">
+		<section className="px-4 md:px-8 pb-16">
 			<div className="container mx-auto">
 				<h2 className="text-3xl font-bold mt-12">History</h2>
 				<Card className="col-span-12 mt-2 w-full">

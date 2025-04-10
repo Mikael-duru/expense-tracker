@@ -25,7 +25,8 @@ const ManagePage = () => {
 					</div>
 				</div>
 			</section>
-			<section className="px-4 md:px-8">
+
+			<section className="px-4 md:px-8 pb-16">
 				<div className="container mx-auto flex flex-col gap-4 py-4">
 					<Card>
 						<CardHeader>
