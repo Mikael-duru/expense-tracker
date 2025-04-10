@@ -29,6 +29,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import ProfileImageUpload from "./image-upload";
+import { deleteUserFromDB } from "@/app/select-currency/_actions/user-actions";
 
 type UserProfileProps = {
 	user: User;
@@ -109,9 +110,10 @@ const UserProfile = ({ user, userDetails }: UserProfileProps) => {
 
 			// Proceed with deleting the user account
 			const userDocRef = doc(db, "users", currentUser.uid);
+			await deleteUserFromDB();
 			await deleteDoc(userDocRef);
 			await deleteUser(currentUser);
-			Cookies.remove("auth");
+			Cookies.remove("__session_auth");
 
 			toast.success("Account deleted successfully!");
 			router.push("/");
@@ -204,12 +206,14 @@ const UserProfile = ({ user, userDetails }: UserProfileProps) => {
 						<div className="space-y-1">
 							<Label htmlFor="deleteAcct">
 								Type the word{" "}
-								<span className="text-red-500">&quot;delete&quot;</span> to
-								confirm.
+								<span className="text-red-500">
+									&quot;delete my account&quot;
+								</span>{" "}
+								to confirm.
 							</Label>
 							<Input
 								id="deleteAcct"
-								placeholder='Enter the word "delete"'
+								placeholder='Enter the word "delete my account"'
 								onChange={(e) => setDeleteAccount(e.target.value)}
 								value={deleteAccount}
 							/>
@@ -220,7 +224,7 @@ const UserProfile = ({ user, userDetails }: UserProfileProps) => {
 							<Button
 								onClick={handleDeleteUserAccount}
 								variant="destructive"
-								disabled={deleteAccount !== "delete" || isLoading}
+								disabled={deleteAccount !== "delete my account" || isLoading}
 							>
 								{isLoading ? (
 									<Loader2 size={20} className="animate-spin" />

@@ -2,7 +2,6 @@
 
 import { prisma } from "@/lib/prisma";
 import { updateUserCurrencySchema } from "@/schema/user-currency";
-import { revalidatePath } from "next/cache";
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -35,9 +34,33 @@ export const createUser = async () => {
 		});
 	}
 
-	// revalidate the homepage that uses this data
-	revalidatePath("/");
 	return user;
+};
+
+export const deleteUserFromDB = async () => {
+	const userId = await getUserId();
+
+	if (!userId) {
+		return redirect("/sign-in");
+	}
+
+	const existingUser = await prisma.user.findUnique({
+		where: { userId },
+	});
+
+	if (!existingUser) {
+		throw new Error("User not found");
+	}
+
+	await prisma.$transaction([
+		prisma.category.deleteMany({ where: { userId } }),
+		prisma.transaction.deleteMany({ where: { userId } }),
+		prisma.monthHistory.deleteMany({ where: { userId } }),
+		prisma.yearHistory.deleteMany({ where: { userId } }),
+		prisma.user.delete({ where: { userId } }),
+	]);
+
+	await prisma.$disconnect();
 };
 
 export const updateUserCurrency = async (currency: string) => {
