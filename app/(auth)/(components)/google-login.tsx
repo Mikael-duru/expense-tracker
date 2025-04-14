@@ -47,13 +47,6 @@ const SignInWithGoogle = () => {
 				await setDoc(userDocRef, userData);
 			}
 
-			localStorage.setItem(
-				"GoogleData",
-				JSON.stringify({
-					userData,
-				})
-			);
-
 			router.push("/select-currency");
 		} catch (error: any) {
 			console.log(error.message);
