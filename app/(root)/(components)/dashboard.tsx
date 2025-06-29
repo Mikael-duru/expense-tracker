@@ -18,8 +18,8 @@ const Dashboard = ({ user }: { user: User }) => {
 			<div className="border-b bg-card px-4 md:px-8">
 				<div className="container mx-auto flex flex-wrap items-center justify-between gap-6 py-8">
 					{userDetails?.firstName && (
-						<h1 className="text-3xl font-bold">
-							Hello, {userDetails?.firstName}! 👋
+						<h1 className="text-3xl font-bold capitalize">
+							hello, {userDetails?.firstName}! 👋
 						</h1>
 					)}
 
