@@ -24,6 +24,7 @@ import SignInWithGoogle from "./google-login";
 import { auth, db } from "@/firebase/firebase";
 import { formSchema } from "@/schema/auth-form";
 import CustomInput from "@/components/custom-input";
+import { storeUserId } from "../_actions/auth-actions";
 
 interface AuthFormProps {
 	type: AuthFormType;
@@ -95,13 +96,10 @@ const AuthForm = ({ type }: AuthFormProps) => {
 		);
 		const user = userCredential.user;
 
-		Cookies.set("__session_auth", user.uid, {
-			expires: 1, // 1 day
-			secure: true,
-			sameSite: "Strict",
-		});
+		await storeUserId(user.uid);
 
-		const userDoc = await getDoc(doc(db, "users", user.uid));
+		const userDocRef = doc(db, "users", user.uid);
+		const userDoc = await getDoc(userDocRef);
 
 		if (!userDoc.exists()) {
 			const userRegistrationData = JSON.parse(

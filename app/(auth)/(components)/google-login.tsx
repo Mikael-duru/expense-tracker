@@ -6,11 +6,11 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
-import Cookies from "js-cookie";
 
 import { auth, db } from "@/firebase/firebase";
 import { Button } from "../../../components/ui/button";
 import Image from "next/image";
+import { storeUserId } from "../_actions/auth-actions";
 
 const SignInWithGoogle = () => {
 	const router = useRouter();
@@ -22,29 +22,22 @@ const SignInWithGoogle = () => {
 
 			const provider = new GoogleAuthProvider();
 			const result = await signInWithPopup(auth, provider);
-			const user = result.user;
 
-			Cookies.set("__session_auth", user.uid, {
-				expires: 1, // 1 day
-				secure: true,
-				sameSite: "Strict",
-			});
+			await storeUserId(result.user.uid);
 
-			const userData = {
-				firstName: user.displayName ? user.displayName.split(" ")[0] : "",
-				lastName: user.displayName ? user.displayName.split(" ")[1] : "",
-				email: user.email,
-				_id: user.uid,
-				photoURL: user.photoURL,
-				displayName: user.displayName,
-				imgPublicId: "", //From cloudinary
-			};
-
-			// Store user data to Firestore if it doesn't already exist
-			const userDocRef = doc(db, "users", user.uid);
+			// Store user data to Firestore only if it doesn't already exist
+			const userDocRef = doc(db, "users", result.user.uid);
 			const userDocSnapshot = await getDoc(userDocRef);
 			if (!userDocSnapshot.exists()) {
-				await setDoc(userDocRef, userData);
+				await setDoc(userDocRef, {
+					_id: result.user.uid,
+					photoURL: result.user.photoURL,
+					displayName: result.user.displayName,
+					email: result.user.email,
+					firstName: result.user.displayName?.split(" ")[0] || "",
+					lastName: result.user.displayName?.split(" ")[1] || "",
+					imgPublicId: "", //From cloudinary
+				});
 			}
 
 			router.push("/select-currency");
